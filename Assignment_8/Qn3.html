@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Carousel</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .carousel {
+            position: relative;
+            width: 500px;
+            margin: auto;
+            overflow: hidden;
+            border: 2px solid black;
+            border-radius: 10px;
+        }
+        .carousel img {
+            width: 100%;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+        }
+        .controls {
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: blue;
+            color: white;
+            border-radius: 5px;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Image Carousel</h2>
+
+    <div class="carousel" id="carousel">
+        <img src="https://via.placeholder.com/500x300/FF5733/FFFFFF?text=Image+1" class="active">
+        <img src="https://via.placeholder.com/500x300/33FF57/FFFFFF?text=Image+2">
+        <img src="https://via.placeholder.com/500x300/3357FF/FFFFFF?text=Image+3">
+        <img src="https://via.placeholder.com/500x300/FF33A1/FFFFFF?text=Image+4">
+    </div>
+
+    <div class="controls">
+        <button onclick="prevImage()">Previous</button>
+        <button onclick="nextImage()">Next</button>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        const images = document.querySelectorAll(".carousel img");
+        let interval = setInterval(nextImage, 3000);
+
+        function showImage(index) {
+            images.forEach(img => img.classList.remove("active"));
+            images[index].classList.add("active");
+        }
+
+        function nextImage() {
+            currentIndex = (currentIndex + 1) % images.length;
+            showImage(currentIndex);
+        }
+
+        function prevImage() {
+            currentIndex = (currentIndex - 1 + images.length) % images.length;
+            showImage(currentIndex);
+        }
+
+        document.getElementById("carousel").addEventListener("mouseenter", () => clearInterval(interval));
+        document.getElementById("carousel").addEventListener("mouseleave", () => interval = setInterval(nextImage, 3000));
+    </script>
+
+</body>
+</html>
